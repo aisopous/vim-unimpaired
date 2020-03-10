@@ -7,6 +7,7 @@ if exists("g:loaded_unimpaired") || &cp || v:version < 700
   finish
 endif
 let g:loaded_unimpaired = 1
+let g:unimpaired_no_encoding_default_mappings = 0
 
 let s:maps = []
 function! s:map(...) abort
@@ -518,12 +519,14 @@ function! UnimpairedMapTransform(algorithm, key) abort
   call s:map('n', a:key.a:key[strlen(a:key)-1], '<Plug>unimpaired_line_'.a:algorithm)
 endfunction
 
-call UnimpairedMapTransform('string_encode','[y')
-call UnimpairedMapTransform('string_decode',']y')
-call UnimpairedMapTransform('url_encode','[u')
-call UnimpairedMapTransform('url_decode',']u')
-call UnimpairedMapTransform('xml_encode','[x')
-call UnimpairedMapTransform('xml_decode',']x')
+if g:unimpaired_no_encoding_default_mappings
+  call UnimpairedMapTransform('string_encode','[y')
+  call UnimpairedMapTransform('string_decode',']y')
+  call UnimpairedMapTransform('url_encode','[u')
+  call UnimpairedMapTransform('url_decode',']u')
+  call UnimpairedMapTransform('xml_encode','[x')
+  call UnimpairedMapTransform('xml_decode',']x')
+endif
 
 " Section: Activation
 
